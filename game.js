@@ -1,4 +1,4 @@
-const app = angular.module('app', []);
+﻿const app = angular.module('app', []);
 
 app.controller('GameController', function($scope) {
 
@@ -109,7 +109,7 @@ app.controller('GameController', function($scope) {
         window.location.reload();
     }
 
-    if(!window.sessionStorage.getItem('help')) {
+    if(!window.localStorage.getItem('help')) {
         $scope.help = true;
     }
 
@@ -118,7 +118,7 @@ app.controller('GameController', function($scope) {
     }
 
     $scope.closeHelp = function() {
-        window.sessionStorage.setItem('help', true);
+        window.localStorage.setItem('help', true);
         $scope.help = false;
     }
 
