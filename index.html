@@ -1,0 +1,102 @@
+<html ng-app="app">
+
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="favicon.png">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
+    <script src="game.js"></script>
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Colorama</title>
+</head>
+
+<body ng-controller="GameController">
+    <div class="content" ng-cloak>
+        <div class="logo">
+            <div>
+                Colorama
+                <button class="help" ng-click="showHelp()">
+                    <i class="fas fa-question"></i>
+                </button>
+            </div>
+            <div class="credits">
+                Desenvolvido por <a href="https://eugabrielsilva.tk" target="_blank">Gabriel Silva</a>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="game">
+                <div class="board" ng-repeat="(key, board) in boards" ng-class="{'active': currentBoard == key}">
+                    <div class="ball" ng-repeat="guess in board.guesses track by $index" ng-class="guess"></div>
+                    <div class="tips">
+                        <div ng-repeat="tip in board.tips track by $index" ng-class="tip"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="btns">
+                <button ng-click="submitGuess()">✅&nbsp;&nbsp;Confirmar</button>
+                <button class="clear" ng-click="resetGuess()">❌&nbsp;&nbsp;Limpar</button>
+            </div>
+            <div class="options">
+                <button ng-repeat="color in colors" ng-class="{'active': currentGuess == color, [color]: true}" ng-disabled="colorUsed(color)" ng-click="setGuess(color)"></button>
+            </div>
+        </div>
+
+        <div class="dialog" ng-if="victory">
+            <div class="body">
+                <h1>Parabéns! 😄</h1>
+                <h2>Você acertou em <u>{{currentBoard + 1}} tentativas</u>.</h2>
+                <h3>Resposta:</h3>
+                <div class="answer">
+                    <div ng-repeat="color in answer" ng-class="color"></div>
+                </div>
+                <h4>Compartilhe seu resultado!</h4>
+                <div class=" share">
+                    <button ng-click="share('twitter')"><i class="fab fa-twitter"></i></button>
+                    <button ng-click="share('copy')"><i class="fas fa-copy"></i></button>
+                </div>
+                <button class="play-again" ng-click="playAgain()">✅&nbsp;&nbsp;Jogar novamente</button>
+            </div>
+        </div>
+
+        <div class="dialog" ng-if="fail">
+            <div class="body">
+                <h1>Não foi dessa vez! 😭</h1>
+                <h2>Você não conseguiu acertar a senha.</h2>
+                <h3>Resposta:</h3>
+                <div class="answer mb-3">
+                    <div ng-repeat="color in answer" ng-class="color"></div>
+                </div>
+                <button class="play-again" ng-click="playAgain()">✅&nbsp;&nbsp;Jogar novamente</button>
+            </div>
+        </div>
+
+        <div class="dialog" ng-if="help">
+            <div class="body">
+                <h1>Colorama 🔒</h1>
+                <h2>Você é capaz de acertar a senha?</h2>
+                <h3 class="mb-0">Como jogar:</h3>
+                <p>
+                    O objetivo do jogo é acertar as 4 cores que compõem a senha usando o mínimo de tentativas possíveis.
+                </p>
+                <p>
+                    Escolha quatro entre as cores disponíveis e clique em <strong>CONFIRMAR</strong> para dar seu chute, então observe as dicas ao lado direito de cada tentativa.
+                </p>
+                <p>
+                    ⚫️ Uma <strong>bolinha preta</strong> significa que uma das cores escolhidas está <strong>correta e no lugar correto</strong> na senha.
+                </p>
+                <p>
+                    ⚪️ Uma <strong>bolinha branca</strong> significa que uma das cores escolhidas está <strong>correta, porém no lugar errado</strong> na senha.
+                </p>
+                <p class="mb-0">
+                    <strong>A ordem das dicas não segue a ordem das cores da senha.</strong>
+                </p>
+                <button class="play-again" ng-click="closeHelp()">✅&nbsp;&nbsp;Vamos lá!</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
