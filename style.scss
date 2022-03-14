@@ -28,7 +28,7 @@
     position: fixed;
     bottom: 20px;
     left: 20px;
-    font-size: 32px;
+    font-size: 28px;
     color: white;
     opacity: 0.5;
 
@@ -75,7 +75,7 @@ body {
 }
 
 .container {
-    max-width: 400px;
+    max-width: 350px;
 }
 
 .game {
@@ -86,17 +86,17 @@ body {
         justify-content: center;
         align-items: center;
         border-bottom: 1px solid #607d8b;
-        padding: 10px;
+        padding: 7px 10px;
 
         &.active {
-            border-bottom: 2px solid #546e7a;
+            background-color: #eceff1;
         }
 
         .ball {
             margin: 0 5px;
-            width: 50px;
-            height: 50px;
-            flex: 0 0 50px;
+            width: 40px;
+            height: 40px;
+            flex: 0 0 40px;
             border: 1px solid #607d8b;
             border-radius: 100%;
         }
@@ -186,8 +186,8 @@ body {
         outline: none;
         margin: 5px 10px;
         border-radius: 100%;
-        width: 40px;
-        height: 40px;
+        width: 30px;
+        height: 30px;
         border: 1px solid #607d8b;
         transition: 0.2s transform;
 
@@ -207,7 +207,7 @@ body {
     z-index: 2;
     width: 100%;
     height: 100%;
-    font-size: 20px;
+    font-size: 18px;
     background-color: rgba(0, 0, 0, 0.5);
     display: flex;
     align-items: center;
@@ -232,17 +232,17 @@ body {
         }
 
         h1 {
-            font-size: 32px;
+            font-size: 28px;
             margin-bottom: 0;
         }
 
         h2 {
-            font-size: 24px;
+            font-size: 22px;
             margin-bottom: 20px;
         }
 
         h3 {
-            font-size: 20px;
+            font-size: 18px;
             margin-bottom: 10px;
         }
 
