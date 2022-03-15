@@ -2,13 +2,13 @@
 
 <head>
     <meta charset="UTF-8">
+    <link rel="shortcut icon" href="favicon.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="stylesheet" href="style.css?updateAsset=851494bd3c57b20a131e0f2c276ab003">
-    <link rel="shortcut icon" href="favicon.png">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
-    <script src="game.js?updateAsset=851494bd3c57b20a131e0f2c276ab003"></script>
+    <script src="game.js?updateVersion=df505568b787577dfe7ed3d71528b553"></script>
+    <link rel="stylesheet" href="style.css?updateVersion=df505568b787577dfe7ed3d71528b553">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>Colorama</title>
 </head>
@@ -29,7 +29,7 @@
 
         <div class="container">
             <div class="game">
-                <div class="board" ng-repeat="(key, board) in boards" ng-class="{'active': currentBoard == key}">
+                <div class="board" ng-repeat="(key, board) in game.boards" ng-class="{'active': game.currentBoard == key}">
                     <div class="ball" ng-repeat="guess in board.guesses track by $index" ng-class="guess"></div>
                     <div class="tips">
                         <div ng-repeat="tip in board.tips track by $index" ng-class="tip"></div>
@@ -48,10 +48,10 @@
         <div class="dialog" ng-if="victory">
             <div class="body">
                 <h1>Parabéns! 😄</h1>
-                <h2>Você acertou em <u>{{currentBoard + 1}} tentativas</u>.</h2>
+                <h2>Você acertou em <u>{{game.currentBoard + 1}} tentativas</u>.</h2>
                 <h3>Resposta:</h3>
                 <div class="answer">
-                    <div ng-repeat="color in answer" ng-class="color"></div>
+                    <div ng-repeat="color in game.answer" ng-class="color"></div>
                 </div>
                 <h4>Compartilhe seu resultado!</h4>
                 <div class=" share">
@@ -67,8 +67,13 @@
                 <h1>Não foi dessa vez! 😭</h1>
                 <h2>Você não conseguiu acertar a senha.</h2>
                 <h3>Resposta:</h3>
-                <div class="answer mb-3">
-                    <div ng-repeat="color in answer" ng-class="color"></div>
+                <div class="answer">
+                    <div ng-repeat="color in game.answer" ng-class="color"></div>
+                </div>
+                <h4>Compartilhe seu resultado!</h4>
+                <div class=" share">
+                    <button ng-click="share('twitter')"><i class="fab fa-twitter"></i></button>
+                    <button ng-click="share('copy')"><i class="fas fa-copy"></i></button>
                 </div>
                 <button class="play-again" ng-click="playAgain()">✅&nbsp;&nbsp;Jogar novamente</button>
             </div>
@@ -99,7 +104,7 @@
         </div>
     </div>
 
-    <script src="responsive.js?updateAsset=851494bd3c57b20a131e0f2c276ab003"></script>
+    <script src="responsive.js?updateVersion=df505568b787577dfe7ed3d71528b553"></script>
 </body>
 
 </html>

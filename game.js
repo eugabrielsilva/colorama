@@ -4,105 +4,116 @@ app.controller('GameController', function($scope) {
 
     $scope.colors = ['blue', 'red', 'purple', 'green', 'brown', 'yellow'];
 
-    $scope.boards = [
-        {
-            guesses: ['', '', '', ''],
-            tips: ['', '', '', '']
-        },
-        {
-            guesses: ['', '', '', ''],
-            tips: ['', '', '', '']
-        },
-        {
-            guesses: ['', '', '', ''],
-            tips: ['', '', '', '']
-        },
-        {
-            guesses: ['', '', '', ''],
-            tips: ['', '', '', '']
-        },
-        {
-            guesses: ['', '', '', ''],
-            tips: ['', '', '', '']
-        },
-        {
-            guesses: ['', '', '', ''],
-            tips: ['', '', '', '']
-        },
-        {
-            guesses: ['', '', '', ''],
-            tips: ['', '', '', '']
-        },
-        {
-            guesses: ['', '', '', ''],
-            tips: ['', '', '', '']
-        },
-        {
-            guesses: ['', '', '', ''],
-            tips: ['', '', '', '']
-        },
-        {
-            guesses: ['', '', '', ''],
-            tips: ['', '', '', '']
-        }
-    ];
+    if(window.localStorage.getItem('game')) {
+        $scope.game = JSON.parse(window.localStorage.getItem('game'));
+    } else {
+        $scope.game = {
+            answer: generateGame(),
+            currentBoard: 0,
+            currentBall: 0,
+            boards: [
+                {
+                    guesses: ['', '', '', ''],
+                    tips: ['', '', '', '']
+                },
+                {
+                    guesses: ['', '', '', ''],
+                    tips: ['', '', '', '']
+                },
+                {
+                    guesses: ['', '', '', ''],
+                    tips: ['', '', '', '']
+                },
+                {
+                    guesses: ['', '', '', ''],
+                    tips: ['', '', '', '']
+                },
+                {
+                    guesses: ['', '', '', ''],
+                    tips: ['', '', '', '']
+                },
+                {
+                    guesses: ['', '', '', ''],
+                    tips: ['', '', '', '']
+                },
+                {
+                    guesses: ['', '', '', ''],
+                    tips: ['', '', '', '']
+                },
+                {
+                    guesses: ['', '', '', ''],
+                    tips: ['', '', '', '']
+                },
+                {
+                    guesses: ['', '', '', ''],
+                    tips: ['', '', '', '']
+                },
+                {
+                    guesses: ['', '', '', ''],
+                    tips: ['', '', '', '']
+                }
+            ]
+        };
 
-    $scope.currentBoard = 0;
-    $scope.currentBall = 0;
-
-    function generateGame() {
-        let colors = angular.copy($scope.colors);
-        $scope.answer = colors.sort(() => .5 - Math.random()).slice(0, 4);
+        window.localStorage.setItem('game', JSON.stringify($scope.game));
     }
 
-    generateGame();
+    $scope.$watch('game', function(newValue, oldValue) {
+        if(!$scope.victory && !$scope.fail && newValue != oldValue) window.localStorage.setItem('game', JSON.stringify($scope.game));
+    }, true);
 
     $scope.setGuess = function(color) {
-        if(!$scope.boards[$scope.currentBoard].guesses.includes('') || $scope.colorUsed(color)) return;
-        $scope.boards[$scope.currentBoard].guesses[$scope.currentBall] = color;
-        $scope.currentBall++;
+        if(!$scope.game.boards[$scope.game.currentBoard].guesses.includes('') || $scope.colorUsed(color)) return;
+        $scope.game.boards[$scope.game.currentBoard].guesses[$scope.game.currentBall] = color;
+        $scope.game.currentBall++;
     }
 
     $scope.colorUsed = function(color) {
-        return $scope.boards[$scope.currentBoard].guesses.includes(color);
+        return $scope.game.boards[$scope.game.currentBoard].guesses.includes(color);
     }
 
     $scope.resetGuess = function() {
-        $scope.boards[$scope.currentBoard].guesses = ['', '', '', ''];
-        $scope.currentBall = 0;
+        $scope.game.boards[$scope.game.currentBoard].guesses = ['', '', '', ''];
+        $scope.game.currentBall = 0;
     }
 
     $scope.submitGuess = function() {
-        if($scope.boards[$scope.currentBoard].guesses.includes('')) {
+        if($scope.game.boards[$scope.game.currentBoard].guesses.includes('')) {
             alert('Escolha todas as cores antes de fazer um chute!');
             return;
         }
 
         let tips = [];
-        $scope.boards[$scope.currentBoard].guesses.forEach((guess, key) => {
-            if($scope.answer[key] == guess) {
+        $scope.game.boards[$scope.game.currentBoard].guesses.forEach((guess, key) => {
+            if($scope.game.answer[key] == guess) {
                 tips.push('correct');
-            } else if($scope.answer.includes(guess)) {
+            } else if($scope.game.answer.includes(guess)) {
                 tips.push('incorrect');
             }
         });
 
         tips = tips.sort(() => .5 - Math.random());
         while(tips.length < 4) tips.push('');
-        $scope.boards[$scope.currentBoard].tips = tips;
+        $scope.game.boards[$scope.game.currentBoard].tips = tips;
 
         if(tips.every(elem => elem === 'correct')) {
             $scope.victory = true;
+            let count = window.localStorage.getItem('count') ?? 0;
+            window.localStorage.setItem('count', parseInt(count) + 1);
+            window.localStorage.removeItem('game');
             return;
         }
 
-        if($scope.currentBoard == 9) {
+        if($scope.game.currentBoard == 9) {
             $scope.fail = true;
+            let count = window.localStorage.getItem('count') ?? 0;
+            window.localStorage.setItem('count', parseInt(count) + 1);
+            window.localStorage.removeItem('game');
             return;
         }
 
-        $scope.currentBall = 0;
-        $scope.currentBoard++;
+        $scope.game.currentBall = 0;
+        $scope.game.currentBoard++;
     }
 
     $scope.playAgain = function() {
@@ -128,7 +139,7 @@ app.controller('GameController', function($scope) {
 
         switch(social) {
             case 'twitter':
-                url = 'https://twitter.com/intent/tweet?text=' + encodeURI(text);
+                url = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(text);
                 break;
 
             case 'copy':
@@ -143,10 +154,18 @@ app.controller('GameController', function($scope) {
         window.open(url, '_blank');
     }
 
+    function generateGame() {
+        let colors = angular.copy($scope.colors);
+        return colors.sort(() => .5 - Math.random()).slice(0, 4);
+    }
+
     function prepareShare() {
         let emojis = '';
+        let count = window.localStorage.getItem('count');
+        let tries = $scope.game.currentBoard + 1;
+        if(tries == 10) tries = 'X';
 
-        $scope.answer.forEach(color => {
+        $scope.game.answer.forEach(color => {
             switch(color) {
                 case 'blue':
                     emojis += '🔵';
@@ -174,7 +193,7 @@ app.controller('GameController', function($scope) {
             }
         });
 
-        let text = `Joguei Colorama!\n${($scope.currentBoard + 1)}/10\n${emojis}\n\nhttps://eugabrielsilva.tk/colorama`;
+        let text = `Joguei Colorama! #${count}\n${tries}/10\n${emojis}\n\nhttps://eugabrielsilva.tk/colorama`;
         return text;
     }
 });
