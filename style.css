@@ -24,43 +24,49 @@
 }
 
 .logo {
-  position: fixed;
-  bottom: 20px;
-  left: 20px;
-  font-size: 28px;
+  font-size: 1.4rem;
   color: white;
   opacity: 0.5;
+  text-align: center;
+  margin-bottom: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .logo button {
   outline: none;
   vertical-align: middle;
-  border: 1px solid white;
-  font-size: 12px;
-  padding: 5px;
-  border-radius: 5px;
+  border: 0.0625rem solid white;
+  font-size: 0.75rem;
+  padding: 0.3125rem;
+  border-radius: 0.3125rem;
   color: white;
   background-color: transparent;
-  margin: 0 5px;
+  margin: 0 0.3125rem;
   transition: 0.3s all;
 }
 .logo button:hover {
   opacity: 0.8;
 }
 .logo .credits {
-  font-size: 14px;
+  font-size: 0.9rem;
+  margin-left: 0.5rem;
 }
 .logo .credits a {
   color: white;
   text-decoration: none;
-  border-bottom: 1px dotted white;
+  border-bottom: 0.0625rem dotted white;
   transition: 0.3s all;
 }
 .logo .credits a:hover {
   opacity: 0.8;
 }
 
+html {
+  font-size: 16px;
+}
+
 body {
-  padding: 10px 0;
   background-color: #37474f;
   display: flex;
   align-items: center;
@@ -69,7 +75,7 @@ body {
 }
 
 .container {
-  max-width: 350px;
+  max-width: 21.875rem;
 }
 
 .game {
@@ -79,32 +85,33 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  border-bottom: 1px solid #607d8b;
-  padding: 7px 10px;
+  border-bottom: 0.0625rem solid #607d8b;
+  padding: 0.4375rem 0.625rem;
 }
 .game .board.active {
   background-color: #eceff1;
 }
 .game .board .ball {
-  margin: 0 5px;
-  width: 40px;
-  height: 40px;
-  flex: 0 0 40px;
-  border: 1px solid #607d8b;
+  margin: 0 0.3125rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  flex: 0 0 2.5rem;
+  border: 0.0625rem solid #607d8b;
   border-radius: 100%;
 }
 .game .board .tips {
   display: flex;
   flex-wrap: wrap;
-  flex: 0 0 50px;
-  margin-left: 10px;
+  flex: 0 0 3.125rem;
+  margin-left: 0.625rem;
 }
 .game .board .tips div {
-  margin: 2px;
-  width: 20px;
-  height: 20px;
+  margin: 0.125rem;
+  width: 1.25rem;
+  height: 1.25rem;
+  flex: 0 0 1.25rem;
   border-radius: 100%;
-  border: 1px solid #607d8b;
+  border: 0.0625rem solid #607d8b;
 }
 .game .board .tips div.correct {
   background-color: black;
@@ -116,19 +123,19 @@ body {
 .btns {
   display: flex;
   justify-content: center;
-  margin: 20px auto;
+  margin: 0.8rem auto;
 }
 .btns button {
-  margin: 0 10px;
+  margin: 0 0.625rem;
   color: white;
   outline: none;
   cursor: pointer;
   border: none;
   text-transform: uppercase;
-  font-size: 16px;
-  padding: 10px 25px;
+  font-size: 1rem;
+  padding: 0.625rem 1.5625rem;
   background-color: #009688;
-  transition: 0.3s all;
+  transition: 0.3s background-color;
 }
 .btns button.clear {
   background-color: #78909c;
@@ -141,14 +148,14 @@ body {
 }
 
 .play-again {
-  margin-top: 20px;
+  margin-top: 1.25rem;
   color: white;
   outline: none;
   cursor: pointer;
   border: none;
   text-transform: uppercase;
-  font-size: 16px;
-  padding: 10px 25px;
+  font-size: 1rem;
+  padding: 0.625rem 1.5625rem;
   background-color: #009688;
   transition: 0.3s all;
 }
@@ -160,21 +167,22 @@ body {
   background-color: #b8c1c5;
   display: flex;
   justify-content: center;
-  padding: 10px;
-  border-bottom: 5px solid #795548;
+  padding: 0.625rem;
+  border-bottom: 0.3125rem solid #795548;
 }
 .options button {
   cursor: pointer;
   outline: none;
-  margin: 5px 10px;
+  margin: 0.3125rem 0.5rem;
   border-radius: 100%;
-  width: 30px;
-  height: 30px;
-  border: 1px solid #607d8b;
+  width: 2.2rem;
+  height: 2.2rem;
+  flex: 0 0 2.2rem;
+  border: 0.0625rem solid #607d8b;
   transition: 0.2s transform;
 }
 .options button:hover {
-  transform: translateY(-2px);
+  transform: translateY(-0.125rem);
 }
 .options button:disabled {
   cursor: default;
@@ -186,7 +194,7 @@ body {
   z-index: 2;
   width: 100%;
   height: 100%;
-  font-size: 18px;
+  font-size: 1.125rem;
   background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
@@ -197,8 +205,8 @@ body {
 .dialog .body {
   background-color: white;
   width: 100%;
-  max-width: 600px;
-  padding: 40px 20px;
+  max-width: 37.5rem;
+  padding: 2.5rem 1.25rem;
   text-align: center;
   color: #455a64;
 }
@@ -209,94 +217,40 @@ body {
   font-weight: 500;
 }
 .dialog .body h1 {
-  font-size: 28px;
+  font-size: 1.75rem;
   margin-bottom: 0;
 }
 .dialog .body h2 {
-  font-size: 22px;
-  margin-bottom: 20px;
+  font-size: 1.375rem;
+  margin-bottom: 1.25rem;
 }
 .dialog .body h3 {
-  font-size: 18px;
-  margin-bottom: 10px;
+  font-size: 1.125rem;
+  margin-bottom: 0.625rem;
 }
 .dialog .body .answer {
   display: flex;
   justify-content: center;
 }
 .dialog .body .answer div {
-  margin: 5px 10px;
+  margin: 0.3125rem 0.625rem;
   border-radius: 100%;
-  width: 50px;
-  height: 50px;
-  border: 1px solid #607d8b;
+  width: 3.125rem;
+  height: 3.125rem;
+  border: 0.0625rem solid #607d8b;
 }
 .dialog .body h4 {
   font-weight: 500;
-  margin-bottom: 20px;
-  font-size: 20px;
-  margin-top: 20px;
+  margin-bottom: 1.25rem;
+  font-size: 1.25rem;
+  margin-top: 1.25rem;
 }
 .dialog .body .share button {
   background-color: transparent;
   border: none;
   outline: none;
   cursor: pointer;
-  font-size: 32px;
+  font-size: 2rem;
   color: #455a64;
-  margin: 0 5px;
-}
-
-@media (max-width: 899px) {
-  .logo {
-    left: 0;
-    width: 100%;
-    top: 0;
-    text-align: center;
-    background-color: #455a64;
-    font-size: 20px;
-    height: 70px;
-    padding: 10px;
-  }
-  .logo button {
-    font-size: 10px;
-  }
-  .logo .credits {
-    font-size: 13px;
-    margin-top: 0;
-  }
-
-  .game {
-    margin-top: 80px;
-  }
-}
-@media (max-width: 399px) {
-  .container {
-    max-width: 300px;
-  }
-
-  .btns button {
-    font-size: 14px;
-    padding: 10px 15px;
-  }
-
-  .options button {
-    margin: 5px 7px;
-    width: 30px;
-    height: 30px;
-    flex-basis: 30px;
-  }
-
-  .game .board .ball {
-    width: 30px;
-    height: 30px;
-    flex-basis: 30px;
-  }
-  .game .board .tips {
-    flex-basis: 40px;
-  }
-  .game .board .tips div {
-    width: 15px;
-    height: 15px;
-  }
+  margin: 0 0.3125rem;
 }
