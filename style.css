@@ -42,8 +42,8 @@
   border-radius: 0.3125rem;
   color: white;
   background-color: transparent;
-  margin: 0 0.3125rem;
-  transition: 0.3s all;
+  margin: 0 0.2rem;
+  transition: 0.3s opacity;
 }
 .logo button:hover {
   opacity: 0.8;
@@ -56,7 +56,7 @@
   color: white;
   text-decoration: none;
   border-bottom: 0.0625rem dotted white;
-  transition: 0.3s all;
+  transition: 0.3s opacity;
 }
 .logo .credits a:hover {
   opacity: 0.8;
@@ -157,7 +157,7 @@ body {
   font-size: 1rem;
   padding: 0.625rem 1.5625rem;
   background-color: #009688;
-  transition: 0.3s all;
+  transition: 0.3s background-color;
 }
 .play-again:hover {
   background-color: #26a69a;

@@ -7,8 +7,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
-    <script src="game.js?updateVersion=df505568b787577dfe7ed3d71528b553"></script>
-    <link rel="stylesheet" href="style.css?updateVersion=df505568b787577dfe7ed3d71528b553">
+    <script src="game.js?updateVersion=021d333ae69274c84fdc7e09e5da6a96"></script>
+    <link rel="stylesheet" href="style.css?updateVersion=021d333ae69274c84fdc7e09e5da6a96">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>Colorama</title>
 </head>
@@ -20,6 +20,9 @@
                 Colorama
                 <button class="help" ng-click="showHelp()">
                     <i class="fas fa-question"></i>
+                </button>
+                <button class="help" ng-click="showStats()">
+                    <i class="fas fa-chart-bar"></i>
                 </button>
             </div>
             <div class="credits">
@@ -38,7 +41,7 @@
             </div>
             <div class="btns">
                 <button ng-click="submitGuess()">✅&nbsp;&nbsp;Confirmar</button>
-                <button class="clear" ng-click="resetGuess()">❌&nbsp;&nbsp;Limpar</button>
+                <button class="clear" ng-click="clearGuess()">❌&nbsp;&nbsp;Limpar</button>
             </div>
             <div class="options">
                 <button ng-repeat="color in colors" ng-class="{'active': currentGuess == color, [color]: true}" ng-disabled="colorUsed(color)" ng-click="setGuess(color)"></button>
@@ -102,9 +105,34 @@
                 <button class="play-again" ng-click="closeHelp()">✅&nbsp;&nbsp;Vamos lá!</button>
             </div>
         </div>
+
+        <div class="dialog" ng-if="status">
+            <div class="body">
+                <h1>Suas Estatísticas 📊</h1>
+                <div class="row mt-5 mb-2">
+                    <div class="col-6">
+                        <h2 class="mb-0">😄 Vitórias</h2>
+                        <h1>{{stats.wins}}</h1>
+                    </div>
+                    <div class="col-6">
+                        <h2 class="mb-0">😭 Derrotas</h2>
+                        <h1>{{stats.loss}}</h1>
+                    </div>
+                    <div class="col-6 mt-4">
+                        <h2 class="mb-0">🎮 Total de jogos</h2>
+                        <h1>{{stats.wins + stats.loss}}</h1>
+                    </div>
+                    <div class="col-6 mt-4">
+                        <h2 class="mb-0">🏅 Média de vitórias</h2>
+                        <h1>{{(100 * stats.wins) / (stats.wins + stats.loss) | number: 0}}%</h1>
+                    </div>
+                </div>
+                <button class="play-again" ng-click="closeStats()">✅&nbsp;&nbsp;Fechar</button>
+            </div>
+        </div>
     </div>
 
-    <script src="responsive.js?updateVersion=df505568b787577dfe7ed3d71528b553"></script>
+    <script src="responsive.js?updateVersion=021d333ae69274c84fdc7e09e5da6a96"></script>
 </body>
 
 </html>

@@ -58,8 +58,23 @@ app.controller('GameController', function($scope) {
         window.localStorage.setItem('game', JSON.stringify($scope.game));
     }
 
+    if(window.localStorage.getItem('stats')) {
+        $scope.stats = JSON.parse(window.localStorage.getItem('stats'));
+    } else {
+        $scope.stats = {
+            wins: 0,
+            loss: 0
+        };
+
+        window.localStorage.setItem('stats', JSON.stringify($scope.stats));
+    }
+
     $scope.$watch('game', function(newValue, oldValue) {
         if(!$scope.victory && !$scope.fail && newValue != oldValue) window.localStorage.setItem('game', JSON.stringify($scope.game));
+    }, true);
+
+    $scope.$watch('stats', function(newValue, oldValue) {
+        if(newValue != oldValue) window.localStorage.setItem('stats', JSON.stringify($scope.stats));
     }, true);
 
     $scope.setGuess = function(color) {
@@ -72,9 +87,9 @@ app.controller('GameController', function($scope) {
         return $scope.game.boards[$scope.game.currentBoard].guesses.includes(color);
     }
 
-    $scope.resetGuess = function() {
-        $scope.game.boards[$scope.game.currentBoard].guesses = ['', '', '', ''];
-        $scope.game.currentBall = 0;
+    $scope.clearGuess = function() {
+        if($scope.game.currentBall != 0) $scope.game.currentBall--;
+        $scope.game.boards[$scope.game.currentBoard].guesses[$scope.game.currentBall] = '';
     }
 
     $scope.submitGuess = function() {
@@ -98,16 +113,14 @@ app.controller('GameController', function($scope) {
 
         if(tips.every(elem => elem === 'correct')) {
             $scope.victory = true;
-            let count = window.localStorage.getItem('count') ?? 0;
-            window.localStorage.setItem('count', parseInt(count) + 1);
+            $scope.stats.wins++;
             window.localStorage.removeItem('game');
             return;
         }
 
         if($scope.game.currentBoard == 9) {
             $scope.fail = true;
-            let count = window.localStorage.getItem('count') ?? 0;
-            window.localStorage.setItem('count', parseInt(count) + 1);
+            $scope.stats.loss++;
             window.localStorage.removeItem('game');
             return;
         }
@@ -128,9 +141,17 @@ app.controller('GameController', function($scope) {
         $scope.help = true;
     }
 
+    $scope.showStats = function() {
+        $scope.status = true;
+    }
+
     $scope.closeHelp = function() {
         window.localStorage.setItem('help', true);
         $scope.help = false;
+    }
+
+    $scope.closeStats = function() {
+        $scope.status = false;
     }
 
     $scope.share = function(social) {
@@ -161,7 +182,6 @@ app.controller('GameController', function($scope) {
 
     function prepareShare() {
         let emojis = '';
-        let count = window.localStorage.getItem('count');
         let tries = $scope.game.currentBoard + 1;
         if(tries == 10) tries = 'X';
 
@@ -193,7 +213,7 @@ app.controller('GameController', function($scope) {
             }
         });
 
-        let text = `Joguei Colorama! #${count}\n${tries}/10\n${emojis}\n\nhttps://eugabrielsilva.tk/colorama`;
+        let text = `Joguei Colorama! #${$scope.stats.wins + $scope.stats.loss}\n${tries}/10\n${emojis}\n\nhttps://eugabrielsilva.tk/colorama`;
         return text;
     }
 });
