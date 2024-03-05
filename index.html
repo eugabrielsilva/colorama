@@ -1,138 +1,139 @@
-<html ng-app="app">
+<!DOCTYPE html>
+<html ng-app="app" lang="pt-br">
 
-<head>
-    <meta charset="UTF-8">
-    <link rel="shortcut icon" href="favicon.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
-    <script src="game.js?updateVersion=021d333ae69274c84fdc7e09e5da6a96"></script>
-    <link rel="stylesheet" href="style.css?updateVersion=021d333ae69274c84fdc7e09e5da6a96">
-    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>Colorama</title>
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
+        <script src="game.min.js?updateVersion=56af1b1d290c6278ba3e7a13e2524bab"></script>
+        <link rel="stylesheet" href="style.min.css?updateVersion=56af1b1d290c6278ba3e7a13e2524bab">
+        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <title>Colorama</title>
+    </head>
 
-<body ng-controller="GameController">
-    <div class="content" ng-cloak>
-        <div class="logo">
-            <div>
-                Colorama
-                <button class="help" ng-click="showHelp()">
-                    <i class="fas fa-question"></i>
-                </button>
-                <button class="help" ng-click="showStats()">
-                    <i class="fas fa-chart-bar"></i>
-                </button>
+    <body ng-controller="GameController">
+        <div class="content" ng-cloak>
+            <div class="logo">
+                <div>
+                    Colorama
+                    <button class="help" ng-click="showHelp()">
+                        <i class="fas fa-question"></i>
+                    </button>
+                    <button class="help" ng-click="showStats()">
+                        <i class="fas fa-chart-bar"></i>
+                    </button>
+                </div>
+                <div class="credits">
+                    por <a href="https://gabrielsilva.dev.br" target="_blank">Gabriel Silva</a>
+                </div>
             </div>
-            <div class="credits">
-                por <a href="https://eugabrielsilva.tk" target="_blank">Gabriel Silva</a>
-            </div>
-        </div>
 
-        <div class="container">
-            <div class="game">
-                <div class="board" ng-repeat="(key, board) in game.boards" ng-class="{'active': game.currentBoard == key}">
-                    <div class="ball" ng-repeat="guess in board.guesses track by $index" ng-class="guess"></div>
-                    <div class="tips">
-                        <div ng-repeat="tip in board.tips track by $index" ng-class="tip"></div>
+            <div class="container">
+                <div class="game">
+                    <div class="board" ng-repeat="(key, board) in game.boards" ng-class="{'active': game.currentBoard == key}">
+                        <div class="ball" ng-repeat="guess in board.guesses track by $index" ng-class="guess"></div>
+                        <div class="tips">
+                            <div ng-repeat="tip in board.tips track by $index" ng-class="tip"></div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="btns">
-                <button ng-click="submitGuess()">✅&nbsp;&nbsp;Confirmar</button>
-                <button class="clear" ng-click="clearGuess()">❌&nbsp;&nbsp;Limpar</button>
-            </div>
-            <div class="options">
-                <button ng-repeat="color in colors" ng-class="{'active': currentGuess == color, [color]: true}" ng-disabled="colorUsed(color)" ng-click="setGuess(color)"></button>
-            </div>
-        </div>
-
-        <div class="dialog" ng-if="victory">
-            <div class="body">
-                <h1>Parabéns! 😄</h1>
-                <h2>Você acertou em <u>{{game.currentBoard + 1}} tentativas</u>.</h2>
-                <h3>Resposta:</h3>
-                <div class="answer">
-                    <div ng-repeat="color in game.answer" ng-class="color"></div>
+                <div class="btns">
+                    <button ng-click="submitGuess()">✅&nbsp;&nbsp;Confirmar</button>
+                    <button class="clear" ng-click="clearGuess()">❌&nbsp;&nbsp;Limpar</button>
                 </div>
-                <h4>Compartilhe seu resultado!</h4>
-                <div class=" share">
-                    <button ng-click="share('twitter')"><i class="fab fa-twitter"></i></button>
-                    <button ng-click="share('copy')"><i class="fas fa-copy"></i></button>
+                <div class="options">
+                    <button ng-repeat="color in colors" ng-class="{'active': currentGuess == color, [color]: true}" ng-disabled="colorUsed(color)" ng-click="setGuess(color)"></button>
                 </div>
-                <button class="play-again" ng-click="playAgain()">✅&nbsp;&nbsp;Jogar novamente</button>
             </div>
-        </div>
 
-        <div class="dialog" ng-if="fail">
-            <div class="body">
-                <h1>Não foi dessa vez! 😭</h1>
-                <h2>Você não conseguiu acertar a senha.</h2>
-                <h3>Resposta:</h3>
-                <div class="answer">
-                    <div ng-repeat="color in game.answer" ng-class="color"></div>
-                </div>
-                <h4>Compartilhe seu resultado!</h4>
-                <div class=" share">
-                    <button ng-click="share('twitter')"><i class="fab fa-twitter"></i></button>
-                    <button ng-click="share('copy')"><i class="fas fa-copy"></i></button>
-                </div>
-                <button class="play-again" ng-click="playAgain()">✅&nbsp;&nbsp;Jogar novamente</button>
-            </div>
-        </div>
-
-        <div class="dialog" ng-if="help">
-            <div class="body">
-                <h1>Colorama 🔒</h1>
-                <h2>Você é capaz de acertar a senha?</h2>
-                <h3 class="mb-0">Como jogar:</h3>
-                <p>
-                    O objetivo do jogo é acertar as 4 cores que compõem a senha usando o mínimo de tentativas possíveis.
-                </p>
-                <p>
-                    Na parte inferior da tela, escolha quatro entre as cores disponíveis e clique em <strong>CONFIRMAR</strong> para dar seu chute, então observe as dicas ao lado direito de cada tentativa.
-                </p>
-                <p>
-                    ⚫️ Uma <strong>bolinha preta</strong> significa que uma das cores escolhidas está <strong>correta e no lugar correto</strong> na senha.
-                </p>
-                <p>
-                    ⚪️ Uma <strong>bolinha branca</strong> significa que uma das cores escolhidas está <strong>correta, porém no lugar errado</strong> na senha.
-                </p>
-                <p class="mb-0">
-                    <strong>A ordem das dicas não segue a ordem das cores da senha.</strong>
-                </p>
-                <button class="play-again" ng-click="closeHelp()">✅&nbsp;&nbsp;Vamos lá!</button>
-            </div>
-        </div>
-
-        <div class="dialog" ng-if="status">
-            <div class="body">
-                <h1>Suas Estatísticas 📊</h1>
-                <div class="row mt-5 mb-2">
-                    <div class="col-6">
-                        <h2 class="mb-0">😄 Vitórias</h2>
-                        <h1>{{stats.wins}}</h1>
+            <div class="dialog" ng-if="victory">
+                <div class="body">
+                    <h1>Parabéns! 😄</h1>
+                    <h2>Você acertou em <u>{{game.currentBoard + 1}} tentativas</u>.</h2>
+                    <h3>Resposta:</h3>
+                    <div class="answer">
+                        <div ng-repeat="color in game.answer" ng-class="color"></div>
                     </div>
-                    <div class="col-6">
-                        <h2 class="mb-0">😭 Derrotas</h2>
-                        <h1>{{stats.loss}}</h1>
+                    <h4>Compartilhe seu resultado!</h4>
+                    <div class=" share">
+                        <button ng-click="share('twitter')"><i class="fab fa-twitter"></i></button>
+                        <button ng-click="share('copy')"><i class="fas fa-copy"></i></button>
                     </div>
-                    <div class="col-6 mt-4">
-                        <h2 class="mb-0">🎮 Total de jogos</h2>
-                        <h1>{{stats.wins + stats.loss}}</h1>
-                    </div>
-                    <div class="col-6 mt-4">
-                        <h2 class="mb-0">🏅 Média de vitórias</h2>
-                        <h1>{{(100 * stats.wins) / (stats.wins + stats.loss) | number: 0}}%</h1>
-                    </div>
+                    <button class="play-again" ng-click="playAgain()">✅&nbsp;&nbsp;Jogar novamente</button>
                 </div>
-                <button class="play-again" ng-click="closeStats()">✅&nbsp;&nbsp;Fechar</button>
+            </div>
+
+            <div class="dialog" ng-if="fail">
+                <div class="body">
+                    <h1>Não foi dessa vez! 😭</h1>
+                    <h2>Você não conseguiu acertar a senha.</h2>
+                    <h3>Resposta:</h3>
+                    <div class="answer">
+                        <div ng-repeat="color in game.answer" ng-class="color"></div>
+                    </div>
+                    <h4>Compartilhe seu resultado!</h4>
+                    <div class=" share">
+                        <button ng-click="share('twitter')"><i class="fab fa-twitter"></i></button>
+                        <button ng-click="share('copy')"><i class="fas fa-copy"></i></button>
+                    </div>
+                    <button class="play-again" ng-click="playAgain()">✅&nbsp;&nbsp;Jogar novamente</button>
+                </div>
+            </div>
+
+            <div class="dialog" ng-if="help">
+                <div class="body">
+                    <h1>Colorama 🔒</h1>
+                    <h2>Você é capaz de acertar a senha?</h2>
+                    <h3 class="mb-0">Como jogar:</h3>
+                    <p>
+                        O objetivo do jogo é acertar as 4 cores que compõem a senha usando o mínimo de tentativas possíveis.
+                    </p>
+                    <p>
+                        Na parte inferior da tela, escolha quatro entre as cores disponíveis e clique em <strong>CONFIRMAR</strong> para dar seu chute, então observe as dicas ao lado direito de cada tentativa.
+                    </p>
+                    <p>
+                        ⚫️ Uma <strong>bolinha preta</strong> significa que uma das cores escolhidas está <strong>correta e no lugar correto</strong> na senha.
+                    </p>
+                    <p>
+                        ⚪️ Uma <strong>bolinha branca</strong> significa que uma das cores escolhidas está <strong>correta, porém no lugar errado</strong> na senha.
+                    </p>
+                    <p class="mb-0">
+                        <strong>A ordem das dicas não segue a ordem das cores da senha.</strong>
+                    </p>
+                    <button class="play-again" ng-click="closeHelp()">✅&nbsp;&nbsp;Vamos lá!</button>
+                </div>
+            </div>
+
+            <div class="dialog" ng-if="status">
+                <div class="body">
+                    <h1>Suas Estatísticas 📊</h1>
+                    <div class="row mt-5 mb-2">
+                        <div class="col-6">
+                            <h2 class="mb-0">😄 Vitórias</h2>
+                            <h1>{{stats.wins}}</h1>
+                        </div>
+                        <div class="col-6">
+                            <h2 class="mb-0">😭 Derrotas</h2>
+                            <h1>{{stats.loss}}</h1>
+                        </div>
+                        <div class="col-6 mt-4">
+                            <h2 class="mb-0">🎮 Total de jogos</h2>
+                            <h1>{{stats.wins + stats.loss}}</h1>
+                        </div>
+                        <div class="col-6 mt-4">
+                            <h2 class="mb-0">🏅 Média de vitórias</h2>
+                            <h1>{{((100 * stats.wins) / (stats.wins + stats.loss) || 0) | number: 0}}%</h1>
+                        </div>
+                    </div>
+                    <button class="play-again" ng-click="closeStats()">✅&nbsp;&nbsp;Fechar</button>
+                </div>
             </div>
         </div>
-    </div>
 
-    <script src="responsive.js?updateVersion=021d333ae69274c84fdc7e09e5da6a96"></script>
-</body>
+        <script src="responsive.min.js?updateVersion=56af1b1d290c6278ba3e7a13e2524bab"></script>
+    </body>
 
 </html>

@@ -11,48 +11,10 @@ app.controller('GameController', function($scope) {
             answer: generateGame(),
             currentBoard: 0,
             currentBall: 0,
-            boards: [
-                {
-                    guesses: ['', '', '', ''],
-                    tips: ['', '', '', '']
-                },
-                {
-                    guesses: ['', '', '', ''],
-                    tips: ['', '', '', '']
-                },
-                {
-                    guesses: ['', '', '', ''],
-                    tips: ['', '', '', '']
-                },
-                {
-                    guesses: ['', '', '', ''],
-                    tips: ['', '', '', '']
-                },
-                {
-                    guesses: ['', '', '', ''],
-                    tips: ['', '', '', '']
-                },
-                {
-                    guesses: ['', '', '', ''],
-                    tips: ['', '', '', '']
-                },
-                {
-                    guesses: ['', '', '', ''],
-                    tips: ['', '', '', '']
-                },
-                {
-                    guesses: ['', '', '', ''],
-                    tips: ['', '', '', '']
-                },
-                {
-                    guesses: ['', '', '', ''],
-                    tips: ['', '', '', '']
-                },
-                {
-                    guesses: ['', '', '', ''],
-                    tips: ['', '', '', '']
-                }
-            ]
+            boards: Array.from({length: 10}, () => ({
+                guesses: ['', '', '', ''],
+                tips: ['', '', '', '']
+            }))
         };
 
         window.localStorage.setItem('game', JSON.stringify($scope.game));
@@ -213,7 +175,7 @@ app.controller('GameController', function($scope) {
             }
         });
 
-        let text = `Joguei Colorama! #${$scope.stats.wins + $scope.stats.loss}\n${tries}/10\n${emojis}\n\nhttps://eugabrielsilva.tk/colorama`;
+        let text = `Joguei Colorama! #${$scope.stats.wins + $scope.stats.loss}\n${tries}/10\n${emojis}\n\nhttps://gabrielsilva.dev.br/colorama`;
         return text;
     }
 });
